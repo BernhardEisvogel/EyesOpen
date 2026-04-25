@@ -35,6 +35,11 @@ func pressSpace() {
 class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     let session = AVCaptureSession()
     var lastNotificationTime = Date.distantPast
+    var lastHandFaceNotificationTime = Date.distantPast
+
+    // Latest face bounding box from the face request (Vision normalised coords, origin bottom-left)
+    var latestFaceBoundingBox: CGRect? = nil
+    let faceBoundingBoxLock = NSLock()
     
     override init() {
         super.init()
@@ -88,26 +93,74 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         
         // Orientation .up represents standard camera feed orientation
         let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up, options: [:])
-        let request = VNDetectFaceRectanglesRequest { [weak self] req, err in
+
+        // --- Face detection request ---
+        let faceRequest = VNDetectFaceRectanglesRequest { [weak self] req, _ in
+            guard let self = self else { return }
             if let results = req.results as? [VNFaceObservation], let firstFace = results.first {
-                self?.handleFace(observation: firstFace)
+                self.faceBoundingBoxLock.lock()
+                self.latestFaceBoundingBox = firstFace.boundingBox
+                self.faceBoundingBoxLock.unlock()
+                self.handleFace(observation: firstFace)
+            } else {
+                self.faceBoundingBoxLock.lock()
+                self.latestFaceBoundingBox = nil
+                self.faceBoundingBoxLock.unlock()
             }
         }
-        
+
+        // --- Hand pose request ---
+        let handRequest = VNDetectHumanHandPoseRequest { [weak self] req, _ in
+            guard let self = self else { return }
+            guard let observations = req.results as? [VNHumanHandPoseObservation],
+                  !observations.isEmpty else { return }
+
+            self.faceBoundingBoxLock.lock()
+            let faceBBox = self.latestFaceBoundingBox
+            self.faceBoundingBoxLock.unlock()
+
+            guard let faceBBox = faceBBox else { return }
+
+            // Expand the face bounding box slightly to be more sensitive near edges
+            let padding: CGFloat = 0.04
+            let expandedFace = faceBBox.insetBy(dx: -padding, dy: -padding)
+
+            // Fingertip joint names we care about
+            let fingertips: [VNHumanHandPoseObservation.JointName] = [
+                .indexTip, .middleTip, .ringTip, .littleTip, .thumbTip,
+                .indexDIP, .middleDIP, .ringDIP, .littleDIP
+            ]
+
+            for hand in observations {
+                for joint in fingertips {
+                    if let point = try? hand.recognizedPoint(joint),
+                       point.confidence > 0.5 {
+                        // Vision uses bottom-left origin for both face bbox and hand points
+                        let handPoint = CGPoint(x: point.x, y: point.y)
+                        if expandedFace.contains(handPoint) {
+                            self.triggerHandFaceNotification()
+                            return
+                        }
+                    }
+                }
+            }
+        }
+        handRequest.maximumHandCount = 2
+
         do {
-            try handler.perform([request])
+            try handler.perform([faceRequest, handRequest])
         } catch {
             print("Vision request failed: \(error)")
         }
     }
     
     func handleFace(observation: VNFaceObservation) {
-        guard let yaw  = observation.yaw else { return }
-        guard let roll = observation.roll else { return }
+        guard let yaw   = observation.yaw else { return }
+        guard let roll  = observation.roll else { return }
         guard let pitch = observation.pitch else { return }
 
-        let yawValue = yaw.doubleValue
-        let rollValue = roll.doubleValue
+        let _ = yaw.doubleValue
+        let _ = roll.doubleValue
         let pitchValue = pitch.doubleValue
         
         // In Vision's coordinate space for yaw (when orientation .up is specified):
@@ -116,30 +169,39 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         
         if pitchValue < -0.15 {
             triggerNotification(direction: "up")
-        }else if pitchValue > 0.3 {
+        } else if pitchValue > 0.4 {
             triggerNotification(direction: "down")
+        }
+    }
+
+    /// Called when a hand fingertip overlaps the face bounding box.
+    func triggerHandFaceNotification() {
+        let now = Date()
+        // Cooldown: alert at most once every 4 seconds
+        if now.timeIntervalSince(lastHandFaceNotificationTime) > 0.7 {
+            lastHandFaceNotificationTime = now
+            print("Hand touching face detected!")
+            stopWav()
+            playWav(named: "dont_touch_your_face")
         }
     }
     
     func triggerNotification(direction: String) {
         let now = Date()
-        // Play sound at most once every 5 seconds to avoid spam
+        // Play sound at most once every 0.7 seconds to avoid spam
         if now.timeIntervalSince(lastNotificationTime) > 0.7 {
             lastNotificationTime = now
             
             print("Head turned \(direction)")
-            if direction == "down"{
+            if direction == "down" {
                 // Play loud sounds natively
                 stopWav()
-                if (Int.random(in: 1...2) == 1){
+                if (Int.random(in: 1...2) == 1) {
                     playWav(named: "mmmrmmm")
-                }else{
+                } else {
                     playWav(named: "dont_fall_asleep")
                 }
-                // NSSound(named: "Glass")?.play()
-                // NSSound(named: "Basso")?.play()
             }
-            // NSSound.beep()
         }
     }
 }
