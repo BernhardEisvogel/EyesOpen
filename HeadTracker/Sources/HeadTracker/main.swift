@@ -59,7 +59,7 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         
         // Orientation .up represents standard camera feed orientation
         let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up, options: [:])
-        let request = VNDetectFaceLandmarksRequest { [weak self] req, err in
+        let request = VNDetectFaceRectanglesRequest { [weak self] req, err in
             if let results = req.results as? [VNFaceObservation], let firstFace = results.first {
                 self?.handleFace(observation: firstFace)
             }
@@ -75,14 +75,20 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     func handleFace(observation: VNFaceObservation) {
         guard let yaw  = observation.yaw else { return }
         guard let roll = observation.roll else { return }
+        guard let pitch = observation.pitch else { return }
 
+        let yawValue = yaw.doubleValue
         let rollValue = roll.doubleValue
+        let pitchValue = pitch.doubleValue
         
         // In Vision's coordinate space for yaw (when orientation .up is specified):
         // Usually, turning the head towards the right (user's right) yields negative yaw values
         // Turning to the left yields positive. We configure < -0.4 as "Right".
-        if rollValue < -0.0 {
-            triggerNotification(direction: "Right")
+        
+        if pitchValue < -0.15 {
+            triggerNotification(direction: "up")
+        }else if pitchValue > 0.15 {
+            triggerNotification(direction: "down")
         }
     }
     
@@ -93,10 +99,11 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             lastNotificationTime = now
             
             print("Head turned \(direction)")
-            
-            // Play loud sounds natively
-            NSSound(named: "Glass")?.play()
-            NSSound(named: "Basso")?.play()
+            if direction == "down"{
+                // Play loud sounds natively
+                NSSound(named: "Glass")?.play()
+                NSSound(named: "Basso")?.play()
+            }
             // NSSound.beep()
         }
     }

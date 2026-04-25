@@ -8,15 +8,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7312A146-3B34-4482-85CB-3B3544E97346"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Sources/HeadTracker/main.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "handleFace(observation:)"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "triggerNotification(direction:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
