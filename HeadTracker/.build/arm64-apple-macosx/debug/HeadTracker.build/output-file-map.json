@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/master.swiftdeps"
+  },
+  "/Users/bernhae45/Documents/EyesOpen/HeadTracker/Sources/HeadTracker/main.swift": {
+    "dependencies": "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main.d",
+    "object": "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main.swift.o",
+    "swiftmodule": "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main.swiftdeps"
+  }
+}

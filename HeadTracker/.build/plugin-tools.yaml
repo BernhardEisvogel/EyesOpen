@@ -1,0 +1,81 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "HeadTracker-arm64-apple-macosx15.0-debug.exe": ["<HeadTracker-arm64-apple-macosx15.0-debug.exe>"]
+  "HeadTracker-arm64-apple-macosx15.0-debug.module": ["<HeadTracker-arm64-apple-macosx15.0-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<HeadTracker-arm64-apple-macosx15.0-debug.exe>","<HeadTracker-arm64-apple-macosx15.0-debug.module>"]
+  "test": ["<HeadTracker-arm64-apple-macosx15.0-debug.exe>","<HeadTracker-arm64-apple-macosx15.0-debug.module>"]
+default: "main"
+nodes:
+  "/Users/bernhae45/Documents/EyesOpen/HeadTracker/Sources/HeadTracker/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker":
+    is-mutated: true
+commands:
+  "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker-entitlement.plist":
+    tool: write-auxiliary-file
+    inputs: ["<entitlement-plist>","<com.apple.security.get-task-allow>"]
+    outputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker-entitlement.plist"]
+    description: "Write auxiliary file /Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker-entitlement.plist"
+
+  "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/bernhae45/Documents/EyesOpen/HeadTracker/Sources/HeadTracker/main.swift"]
+    outputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/sources"]
+    description: "Write auxiliary file /Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/sources"
+
+  "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main.swift.o"]
+    outputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.product/Objects.LinkFileList"
+
+  "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Library/Developer/CommandLineTools/usr/bin/swiftc"]
+    outputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+
+  "<HeadTracker-arm64-apple-macosx15.0-debug.exe>":
+    tool: phony
+    inputs: ["<HeadTracker-arm64-apple-macosx15.0-debug.exe-CodeSigning>"]
+    outputs: ["<HeadTracker-arm64-apple-macosx15.0-debug.exe>"]
+
+  "<HeadTracker-arm64-apple-macosx15.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main.swift.o","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/Modules/HeadTracker.swiftmodule"]
+    outputs: ["<HeadTracker-arm64-apple-macosx15.0-debug.module>"]
+
+  "C.HeadTracker-arm64-apple-macosx15.0-debug.exe":
+    tool: shell
+    inputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main.swift.o","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.product/Objects.LinkFileList"]
+    outputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/HeadTracker"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-L","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug","-o","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker","-module-name","HeadTracker","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-alias","-Xlinker","_HeadTracker_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Library/Developer/CommandLineTools/usr/lib/swift-5.5/macosx","-target","arm64-apple-macosx10.15","-Xlinker","-add_ast_path","-Xlinker","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/Modules/HeadTracker.swiftmodule","-F","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xlinker","-rpath","-Xlinker","/Library/Developer/CommandLineTools/Library/Developer/Frameworks"]
+
+  "C.HeadTracker-arm64-apple-macosx15.0-debug.exe-entitlements":
+    tool: shell
+    inputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker-entitlement.plist"]
+    outputs: ["<HeadTracker-arm64-apple-macosx15.0-debug.exe-CodeSigning>"]
+    description: "Applying debug entitlements to ./.build/arm64-apple-macosx/debug/HeadTracker"
+    args: ["codesign","--force","--sign","-","--entitlements","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker-entitlement.plist","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker"]
+
+  "C.HeadTracker-arm64-apple-macosx15.0-debug.module":
+    tool: shell
+    inputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/Sources/HeadTracker/main.swift","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/sources"]
+    outputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/main.swift.o","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/Modules/HeadTracker.swiftmodule"]
+    description: "Compiling Swift Module 'HeadTracker' (1 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","HeadTracker","-emit-dependencies","-emit-module","-emit-module-path","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/Modules/HeadTracker.swiftmodule","-output-file-map","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/output-file-map.json","-incremental","-c","@/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/HeadTracker.build/sources","-I","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx10.15","-enable-batch-mode","-index-store-path","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j10","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","HeadTracker_main","-swift-version","5","-F","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-Xcc","-g","-package-name","headtracker"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/bernhae45/Documents/EyesOpen/HeadTracker/Sources/HeadTracker/","/Users/bernhae45/Documents/EyesOpen/HeadTracker/Package.swift","/Users/bernhae45/Documents/EyesOpen/HeadTracker/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+
