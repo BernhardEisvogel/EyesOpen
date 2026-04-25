@@ -1,7 +1,7 @@
 import Cocoa
 import AVFoundation
 import Vision
-import UserNotifications
+
 
 class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     let session = AVCaptureSession()
@@ -76,7 +76,6 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         guard let yaw  = observation.yaw else { return }
         guard let roll = observation.roll else { return }
 
-        let yawValue = yaw.doubleValue
         let rollValue = roll.doubleValue
         
         // In Vision's coordinate space for yaw (when orientation .up is specified):

@@ -43,7 +43,7 @@
       ],
       "otherArguments" : [
         "-target",
-        "arm64-apple-macosx10.15",
+        "arm64-apple-macosx12.0",
         "-enable-batch-mode",
         "-index-store-path",
         "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/index/store",
@@ -112,7 +112,7 @@
       "-I",
       "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/Modules",
       "-target",
-      "arm64-apple-macosx10.15",
+      "arm64-apple-macosx12.0",
       "-enable-batch-mode",
       "-index-store-path",
       "/Users/bernhae45/Documents/EyesOpen/HeadTracker/.build/arm64-apple-macosx/debug/index/store",
