@@ -144,19 +144,65 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         let now = Date()
         // Cooldown: alert at most once every 0.7 seconds
         lastHandFaceNotificationTime = now
-        //print("Hand touching face detected!")
-        playWav(named: "dont_touch_your_face")
+        print("Hand touching face detected!")
+        
+        // Randomly choose between TTS and local sound
+        if Int.random(in: 1...2) == 1 {
+            let text = UserDefaults.standard.string(forKey: "HandFaceAlertText") ?? "Don't touch your face!"
+            triggerGradiumSound(text: text, filename: "hand_face_alert.wav")
+        } else {
+            playWav(named: "dont_touch_your_face")
+        }
     }
+
+    func triggerGradiumSound(text: String, filename: String) {
+        let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+        
+        // Check if file exists, if so play it immediately for better responsiveness
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            DispatchQueue.main.async {
+                playWav(url: fileURL)
+            }
+            return
+        }
+        
+        // If not, generate it on the fly
+        Task {
+            do {
+                let data = try await GradiumService.shared.generateSpeech(text: text)
+                try data.write(to: fileURL)
+                
+                DispatchQueue.main.async {
+                    playWav(url: fileURL)
+                }
+            } catch {
+                print("Error generating alert for \(filename): \(error)")
+                // Fallback to local sound if TTS fails
+                DispatchQueue.main.async {
+                    if filename == "hand_face_alert.wav" {
+                        playWav(named: "dont_touch_your_face")
+                    } else {
+                        playWav(named: "dont_fall_asleep")
+                    }
+                }
+            }
+        }
+    }
+
 
     func triggerNotification(direction: String) {
         //print("Head turned \(direction)")
         if direction == "down" {
-            if Int.random(in: 1...2) == 1 {
+            let rand = Int.random(in: 1...3)
+            if rand == 1 {
+                let text = UserDefaults.standard.string(forKey: "HeadDownAlertText") ?? "Keep your head up!"
+                triggerGradiumSound(text: text, filename: "head_down_alert.wav")
+            }
+            else if rand == 2 {
                 playWav(named: "mmmrmmm")
             } else {
                 playWav(named: "dont_fall_asleep")
             }
         }
-        
     }
 }

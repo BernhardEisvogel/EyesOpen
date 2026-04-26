@@ -13,10 +13,21 @@ var timeNextSoundNotification = Date.distantPast // I dont wan tstuff to be said
 func playWav(named fileName: String, ext: String = "m4a") {
     let now = Date()
     if (now>timeNextSoundNotification){
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: ext) else {
+        let url = Bundle.module.url(forResource: fileName, withExtension: ext) ?? Bundle.main.url(forResource: fileName, withExtension: ext)
+        guard let soundURL = url else {
             print("Sound not found: \(fileName)")
             return
         }
+        stopWav()
+        currentSound = NSSound(contentsOf: soundURL, byReference: true)
+        currentSound?.play()
+        timeNextSoundNotification = now.advanced(by: currentSound?.duration ?? 0)
+    }
+}
+
+func playWav(url: URL) {
+    let now = Date()
+    if (now > timeNextSoundNotification) {
         stopWav()
         currentSound = NSSound(contentsOf: url, byReference: true)
         currentSound?.play()
