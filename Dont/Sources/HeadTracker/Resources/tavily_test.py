@@ -148,7 +148,7 @@ def main(argvs):
     if not check_ffmpeg():
         sys.exit(1)
     print(argvs)
-    query = "Scary dolphin sounds"
+    query = "jump scare sounds"
     try:
         sharp = sys.argv[2]
         if (sharp == "False"):

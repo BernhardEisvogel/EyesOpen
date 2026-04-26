@@ -40,11 +40,16 @@ func playWav(named fileName: String, ext: String = "m4a") {
 
 func playWav(url: URL) {
     let now = Date()
-    if (now > timeNextSoundNotification) {
-        stopWav()
-        currentSound = NSSound(contentsOf: url, byReference: true)
-        currentSound?.play()
-        timeNextSoundNotification = now.advanced(by: currentSound?.duration ?? 0)
+    let choice = Int.random(in: 0..<100)
+    if choice > 20 {
+        if (now > timeNextSoundNotification) {
+            stopWav()
+            currentSound = NSSound(contentsOf: url, byReference: true)
+            currentSound?.play()
+            timeNextSoundNotification = now.advanced(by: currentSound?.duration ?? 0)
+        }
+    }else{
+        playTavilySounds()
     }
 }
 
