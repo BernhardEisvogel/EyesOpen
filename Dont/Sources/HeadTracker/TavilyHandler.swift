@@ -16,8 +16,17 @@ let PYTHON_INTERPRETER:String = "/opt/anaconda3/bin/python"
 func runTavily(query: String = "pleasant dolphin sounds") {
     let process = Process()
     
-    process.currentDirectoryURL = URL(fileURLWithPath: "/Users/bernhae45/Documents/EyesOpen/Dont/Sources/HeadTracker/Resources")
-    process.executableURL = URL(fileURLWithPath: "/opt/anaconda3/bin/python")
+    if let resourcePath = Bundle.main.resourcePath {
+        process.currentDirectoryURL = URL(fileURLWithPath: resourcePath)
+    } else {
+        // Fallback to a relative path if bundle is not available (e.g. during development)
+        let currentPath = FileManager.default.currentDirectoryPath
+        process.currentDirectoryURL = URL(fileURLWithPath: currentPath).appendingPathComponent("Sources/HeadTracker/Resources")
+    }
+    
+    // Try to find python in common locations or use the one in PATH
+    let pythonPath = "/usr/bin/python3" // Default macOS python3
+    process.executableURL = URL(fileURLWithPath: pythonPath)
     
     process.environment = [
         "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/opt/anaconda3/bin"
