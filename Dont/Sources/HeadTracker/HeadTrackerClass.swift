@@ -144,12 +144,12 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         let now = Date()
         // Cooldown: alert at most once every 0.7 seconds
         lastHandFaceNotificationTime = now
-        print("Hand touching face detected!")
+        //print("Hand touching face detected!")
         playWav(named: "dont_touch_your_face")
     }
 
     func triggerNotification(direction: String) {
-        print("Head turned \(direction)")
+        //print("Head turned \(direction)")
         if direction == "down" {
             if Int.random(in: 1...2) == 1 {
                 playWav(named: "mmmrmmm")

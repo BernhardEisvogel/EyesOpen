@@ -146,11 +146,10 @@ def process_url(url, index):
             return False
 
 # ---------- Main ----------
-def main():
+def main(argvs):
     if not check_ffmpeg():
         sys.exit(1)
-
-    query = "jump scare sounds"
+    query = "scary jumps scare sound"
     urls = tavily_search(query)
     print(f"🔍 Found {len(urls)} candidate URLs")
 
@@ -168,4 +167,4 @@ def main():
     print(f"\n🏁 Done. Successfully downloaded and converted {successful} items to MP4.")
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv)

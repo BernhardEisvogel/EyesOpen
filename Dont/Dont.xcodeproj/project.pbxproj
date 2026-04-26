@@ -18,6 +18,15 @@
 		A1B2C3D4E5F60000000064 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60000000061 /* AVFoundation.framework */; };
 		A1B2C3D4E5F60000000065 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60000000062 /* Vision.framework */; };
 		A1B2C3D4E5F60000000070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60000000071 /* Assets.xcassets */; };
+		D8A8117D2F9E047E00E364B1 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8117C2F9E047600E364B1 /* PreferencesWindowController.swift */; };
+		D8A8117F2F9E04A100E364B1 /* PreferencesViewController.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8117E2F9E04A000E364B1 /* PreferencesViewController.swift.swift */; };
+		D8A811812F9E063000E364B1 /* TavilyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A811802F9E062D00E364B1 /* TavilyHandler.swift */; };
+		D8A8118A2F9E074900E364B1 /* downloaded_3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D8A811872F9E074900E364B1 /* downloaded_3.mp4 */; };
+		D8A8118B2F9E074900E364B1 /* downloaded_2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D8A811862F9E074900E364B1 /* downloaded_2.mp4 */; };
+		D8A8118C2F9E074900E364B1 /* downloaded_1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = D8A811852F9E074900E364B1 /* downloaded_1.mp4 */; };
+		D8A8118D2F9E074900E364B1 /* .env in Resources */ = {isa = PBXBuildFile; fileRef = D8A811842F9E074900E364B1 /* .env */; };
+		D8A8118E2F9E074900E364B1 /* tavily_test.py in Resources */ = {isa = PBXBuildFile; fileRef = D8A811882F9E074900E364B1 /* tavily_test.py */; };
+		D8A8118F2F9E074900E364B1 /* tavily.cpython-313.pyc in Resources */ = {isa = PBXBuildFile; fileRef = D8A811822F9E074900E364B1 /* tavily.cpython-313.pyc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +44,15 @@
 		A1B2C3D4E5F60000000061 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A1B2C3D4E5F60000000062 /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		A1B2C3D4E5F60000000071 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D8A8117C2F9E047600E364B1 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		D8A8117E2F9E04A000E364B1 /* PreferencesViewController.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift.swift; sourceTree = "<group>"; };
+		D8A811802F9E062D00E364B1 /* TavilyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TavilyHandler.swift; sourceTree = "<group>"; };
+		D8A811822F9E074900E364B1 /* tavily.cpython-313.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "tavily.cpython-313.pyc"; sourceTree = "<group>"; };
+		D8A811842F9E074900E364B1 /* .env */ = {isa = PBXFileReference; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
+		D8A811852F9E074900E364B1 /* downloaded_1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = downloaded_1.mp4; sourceTree = "<group>"; };
+		D8A811862F9E074900E364B1 /* downloaded_2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = downloaded_2.mp4; sourceTree = "<group>"; };
+		D8A811872F9E074900E364B1 /* downloaded_3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = downloaded_3.mp4; sourceTree = "<group>"; };
+		D8A811882F9E074900E364B1 /* tavily_test.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = tavily_test.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,9 +84,13 @@
 		A1B2C3D4E5F60000000003 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D8A8117E2F9E04A000E364B1 /* PreferencesViewController.swift.swift */,
+				D8A8117C2F9E047600E364B1 /* PreferencesWindowController.swift */,
 				A1B2C3D4E5F60000000040 /* main.swift */,
 				A1B2C3D4E5F60000000041 /* AppDelegate.swift */,
 				A1B2C3D4E5F60000000042 /* HeadTrackerClass.swift */,
+				D8A811802F9E062D00E364B1 /* TavilyHandler.swift */,
+				D8A811892F9E074900E364B1 /* tavily */,
 				A1B2C3D4E5F60000000043 /* SoundUtils.swift */,
 				A1B2C3D4E5F60000000004 /* Resources */,
 			);
@@ -102,6 +124,27 @@
 				A1B2C3D4E5F60000000062 /* Vision.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8A811832F9E074900E364B1 /* __pycache__ */ = {
+			isa = PBXGroup;
+			children = (
+				D8A811822F9E074900E364B1 /* tavily.cpython-313.pyc */,
+			);
+			path = __pycache__;
+			sourceTree = "<group>";
+		};
+		D8A811892F9E074900E364B1 /* tavily */ = {
+			isa = PBXGroup;
+			children = (
+				D8A811832F9E074900E364B1 /* __pycache__ */,
+				D8A811842F9E074900E364B1 /* .env */,
+				D8A811852F9E074900E364B1 /* downloaded_1.mp4 */,
+				D8A811862F9E074900E364B1 /* downloaded_2.mp4 */,
+				D8A811872F9E074900E364B1 /* downloaded_3.mp4 */,
+				D8A811882F9E074900E364B1 /* tavily_test.py */,
+			);
+			path = tavily;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +207,12 @@
 			files = (
 				A1B2C3D4E5F60000000070 /* Assets.xcassets in Resources */,
 				A1B2C3D4E5F60000000054 /* dont_fall_asleep.m4a in Resources */,
+				D8A8118A2F9E074900E364B1 /* downloaded_3.mp4 in Resources */,
+				D8A8118B2F9E074900E364B1 /* downloaded_2.mp4 in Resources */,
+				D8A8118C2F9E074900E364B1 /* downloaded_1.mp4 in Resources */,
+				D8A8118D2F9E074900E364B1 /* .env in Resources */,
+				D8A8118E2F9E074900E364B1 /* tavily_test.py in Resources */,
+				D8A8118F2F9E074900E364B1 /* tavily.cpython-313.pyc in Resources */,
 				A1B2C3D4E5F60000000055 /* dont_touch_your_face.m4a in Resources */,
 				A1B2C3D4E5F60000000056 /* mmmrmmm.m4a in Resources */,
 			);
@@ -176,9 +225,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8A811812F9E063000E364B1 /* TavilyHandler.swift in Sources */,
 				A1B2C3D4E5F60000000050 /* main.swift in Sources */,
 				A1B2C3D4E5F60000000051 /* AppDelegate.swift in Sources */,
+				D8A8117D2F9E047E00E364B1 /* PreferencesWindowController.swift in Sources */,
 				A1B2C3D4E5F60000000052 /* HeadTrackerClass.swift in Sources */,
+				D8A8117F2F9E04A100E364B1 /* PreferencesViewController.swift.swift in Sources */,
 				A1B2C3D4E5F60000000053 /* SoundUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
