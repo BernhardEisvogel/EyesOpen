@@ -8,7 +8,7 @@ func stopWav() {
     currentSound = nil
 }
 
-var timeNextSoundNotification = Date.distantPast // I dont wan tstuff to be said at the same time
+var timeNextSoundNotification = Date.distantPast // I dont want stuff to be said at the same time
 
 func playWav(named fileName: String) {
     let now = Date()

@@ -124,18 +124,15 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 
     func handleFace(observation: VNFaceObservation) {
-        guard let yaw   = observation.yaw else { return }
-        guard let roll  = observation.roll else { return }
+
         guard let pitch = observation.pitch else { return }
 
-        let _ = yaw.doubleValue
-        let _ = roll.doubleValue
         let pitchValue = pitch.doubleValue
 
         if pitchValue < -0.15 {
-            triggerNotification(direction: "up")
+            triggerHeadDownNotification(direction: "up")
         } else if pitchValue > 0.4 {
-            triggerNotification(direction: "down")
+            triggerHeadDownNotification(direction: "down")
         }
     }
 
@@ -148,8 +145,7 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         playWav(named: "dont_touch_your_face")
     }
 
-    func triggerNotification(direction: String) {
-        print("Head turned \(direction)")
+    func triggerHeadDownNotification(direction: String) {
         if direction == "down" {
             if Int.random(in: 1...2) == 1 {
                 playWav(named: "mmmrmmm")
