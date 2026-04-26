@@ -7,14 +7,16 @@
 
 import Foundation
 
+// This line might have to be changed depending on the system. This will also be improved later.
+
 let PYTHON_INTERPRETER:String = "/opt/anaconda3/bin/python"
 
-// This is still a somewhat bad version of
+// This is still a somewhat bad version, but it does run
 
 func runTavily(query: String = "pleasant dolphin sounds") {
     let process = Process()
     
-    process.currentDirectoryURL = URL(fileURLWithPath: "/Users/bernhae45/Documents/EyesOpen/Dont/tavily")
+    process.currentDirectoryURL = URL(fileURLWithPath: "/Users/bernhae45/Documents/EyesOpen/Dont/Sources/HeadTracker/Resources")
     process.executableURL = URL(fileURLWithPath: "/opt/anaconda3/bin/python")
     
     process.environment = [
@@ -22,7 +24,7 @@ func runTavily(query: String = "pleasant dolphin sounds") {
     ]
 
     let scriptPath = "tavily_test.py"
-    process.arguments = [scriptPath, query, "False"]
+    process.arguments = [scriptPath, query, "True"]
 
     let pipe = Pipe()
     process.standardOutput = pipe

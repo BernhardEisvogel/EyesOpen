@@ -10,10 +10,23 @@ func stopWav() {
 
 var timeNextSoundNotification = Date.distantPast // I dont wan tstuff to be said at the same time
 
+func playTavilySounds(){
+    // runTavily(query: "scary jumpscare sounds")
+    let chocie:Int = Int.random(in: 0..<3)
+    if chocie == 0 {
+        playWav(named: "tavily_1", ext:  "mp3")
+    } else if chocie == 1 {
+        playWav(named: "tavily_2", ext:  "mp3")
+    } else {
+        playWav(named: "tavily_3", ext:  "mp3")
+    }
+}
+
 func playWav(named fileName: String, ext: String = "m4a") {
+
     let now = Date()
     if (now>timeNextSoundNotification){
-        let url = Bundle.module.url(forResource: fileName, withExtension: ext) ?? Bundle.main.url(forResource: fileName, withExtension: ext)
+        let url = Bundle.main.url(forResource: fileName, withExtension: ext) ?? Bundle.main.url(forResource: fileName, withExtension: ext)
         guard let soundURL = url else {
             print("Sound not found: \(fileName)")
             return

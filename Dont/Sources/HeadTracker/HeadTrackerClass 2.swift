@@ -135,8 +135,8 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         if pitchValue < -0.15 {
             triggerNotification(direction: "up")
         } else if pitchValue > 0.4 {
-            triggerNotification(direction: "down")
-            //playTavilySounds()
+            //triggerNotification(direction: "down")
+            playTavilySounds()
         }
     }
 

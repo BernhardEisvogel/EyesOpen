@@ -20,11 +20,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem(title: "Quit HeadTracker", action: #selector(quitApp), keyEquivalent: "q"))
         statusItem?.menu = menu
 
-        // Pre-generate the sounds on launch
-        Task {
-            await pregenerateSounds()
-        }
-        
         setupEditMenu()
     }
 
@@ -61,7 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         alert.addButton(withTitle: "Save")
         alert.addButton(withTitle: "Cancel")
 
-        let stackView = NSStackView(frame: NSRect(x: 0, y: 0, width: 300, height: 100))
+        let stackView = NSStackView(frame: NSRect(x: 0, y: 0, width: 300, height: 200))
         stackView.orientation = .vertical
         stackView.alignment = .leading
         stackView.spacing = 8
@@ -73,13 +68,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let headDownLabel = NSTextField(labelWithString: "Head Down Alert:")
         let headDownField = NSTextField(frame: NSRect(x: 0, y: 0, width: 300, height: 24))
         headDownField.stringValue = UserDefaults.standard.string(forKey: "HeadDownAlertText") ?? "Keep your head up!"
+        
+        let noiseLabel = NSTextField(labelWithString: "Sound description:")
+        let noiseField = NSTextField(frame: NSRect(x: 0, y: 0, width: 300, height: 24))
+        noiseField.stringValue = UserDefaults.standard.string(forKey: "noiseText") ?? "scary jump scare sounds!"
 
         handFaceField.nextKeyView = headDownField
         
         stackView.addArrangedSubview(handFaceLabel)
         stackView.addArrangedSubview(handFaceField)
+        
         stackView.addArrangedSubview(headDownLabel)
         stackView.addArrangedSubview(headDownField)
+        
+        stackView.addArrangedSubview(noiseLabel)
+        stackView.addArrangedSubview(noiseField)
 
         alert.accessoryView = stackView
         alert.layout()
@@ -112,6 +115,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func pregenerateSounds() async {
         let handFaceText = UserDefaults.standard.string(forKey: "HandFaceAlertText") ?? "Don't touch your face!"
         let headDownText = UserDefaults.standard.string(forKey: "HeadDownAlertText") ?? "Keep your head up!"
+        let noiseText = UserDefaults.standard.string(forKey: "noiseText") ?? "Scary jump scare noises"
         
         do {
             print("Pre-generating hand-face sound...")
@@ -123,6 +127,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let headDownData = try await GradiumService.shared.generateSpeech(text: headDownText)
             let headDownURL = FileManager.default.temporaryDirectory.appendingPathComponent("head_down_alert.wav")
             try headDownData.write(to: headDownURL)
+            
+            print("Generating Tavily sounds")
+            runTavily(query: noiseText)
             
             print("Sounds pre-generated successfully.")
         } catch {

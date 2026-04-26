@@ -15,8 +15,6 @@ import os
 
 load_dotenv()
 
-# TAVILY_API_KEY = "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"
-
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
@@ -37,7 +35,7 @@ def convert_any_to_mp4(input_file, output_file):
     try:
         subprocess.run([
             "ffmpeg", "-i", input_file, "-t", "10",
-            "-vn", "-acodec", "aac", "-y", output_file
+            "-vn", "-acodec", "libmp3lame", "-y", output_file
         ], check=True, capture_output=True)
         print(f"🎧 Converted to MP4: {output_file}")
         return output_file
@@ -83,7 +81,7 @@ def extract_audio_url(url):
 
 # ---------- Download from normal website ----------
 def download_audio(audio_url, output_mp4):
-    temp_file = output_mp4.replace(".mp4", ".tmp")
+    temp_file = output_mp4.replace(".mp3", ".tmp")
     try:
         with requests.get(audio_url, headers=HEADERS, stream=True) as r:
             r.raise_for_status()
@@ -100,7 +98,7 @@ def download_audio(audio_url, output_mp4):
 
 # ---------- Download from YouTube (single video only) ----------
 def download_youtube_audio(url, output_mp4):
-    base_temp = output_mp4.replace(".mp4", "_yt_temp")
+    base_temp = output_mp4.replace(".mp3", "_yt_temp")
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': base_temp + '.%(ext)s',
@@ -134,12 +132,12 @@ def download_youtube_audio(url, output_mp4):
 # ---------- Process one URL ----------
 def process_url(url, index):
     if "youtube.com" in url or "youtu.be" in url:
-        out_mp4 = f"downloaded_{index}.mp4"
+        out_mp4 = f"tavily_{index}.mp3"
         return download_youtube_audio(url, out_mp4)
     else:
         audio_url = extract_audio_url(url)
         if audio_url:
-            out_mp4 = f"downloaded_{index}.mp4"
+            out_mp4 = f"tavily_download/{index}.mp3"
             return download_audio(audio_url, out_mp4)
         else:
             print(f"⚠️ No audio link found on {url}")
@@ -149,7 +147,17 @@ def process_url(url, index):
 def main(argvs):
     if not check_ffmpeg():
         sys.exit(1)
-    query = "scary jumps scare sound"
+    print(argvs)
+    query = "Scary dolphin sounds"
+    try:
+        sharp = sys.argv[2]
+        if (sharp == "False"):
+            print("Early stop to save tokens")
+            quit()
+    except Exception as e:
+        print("There is no second argument")
+
+
     urls = tavily_search(query)
     print(f"🔍 Found {len(urls)} candidate URLs")
 
