@@ -15,6 +15,9 @@
 		A1B2C3D4E5F60000000064 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60000000061 /* AVFoundation.framework */; };
 		A1B2C3D4E5F60000000065 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60000000062 /* Vision.framework */; };
 		A1B2C3D4E5F60000000070 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60000000071 /* Assets.xcassets */; };
+		D89B21EF2F9FC1E800C45250 /* dont_fall_asleep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D89B21EB2F9FC1E800C45250 /* dont_fall_asleep.m4a */; };
+		D89B21F02F9FC1E800C45250 /* dont_touch_your_face.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D89B21EC2F9FC1E800C45250 /* dont_touch_your_face.m4a */; };
+		D89B21F12F9FC1E800C45250 /* mmmrmmm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D89B21ED2F9FC1E800C45250 /* mmmrmmm.m4a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,9 @@
 		A1B2C3D4E5F60000000061 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A1B2C3D4E5F60000000062 /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		A1B2C3D4E5F60000000071 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D89B21EB2F9FC1E800C45250 /* dont_fall_asleep.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = dont_fall_asleep.m4a; sourceTree = "<group>"; };
+		D89B21EC2F9FC1E800C45250 /* dont_touch_your_face.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = dont_touch_your_face.m4a; sourceTree = "<group>"; };
+		D89B21ED2F9FC1E800C45250 /* mmmrmmm.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = mmmrmmm.m4a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,7 @@
 		A1B2C3D4E5F60000000003 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D89B21EE2F9FC1E800C45250 /* Resources */,
 				A1B2C3D4E5F60000000040 /* main.swift */,
 				A1B2C3D4E5F60000000041 /* AppDelegate.swift */,
 				A1B2C3D4E5F60000000042 /* HeadTrackerClass.swift */,
@@ -85,6 +92,16 @@
 				A1B2C3D4E5F60000000062 /* Vision.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D89B21EE2F9FC1E800C45250 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D89B21EB2F9FC1E800C45250 /* dont_fall_asleep.m4a */,
+				D89B21EC2F9FC1E800C45250 /* dont_touch_your_face.m4a */,
+				D89B21ED2F9FC1E800C45250 /* mmmrmmm.m4a */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +162,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D89B21EF2F9FC1E800C45250 /* dont_fall_asleep.m4a in Resources */,
+				D89B21F02F9FC1E800C45250 /* dont_touch_your_face.m4a in Resources */,
+				D89B21F12F9FC1E800C45250 /* mmmrmmm.m4a in Resources */,
 				A1B2C3D4E5F60000000070 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
