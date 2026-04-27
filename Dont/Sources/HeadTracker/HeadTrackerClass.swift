@@ -108,6 +108,7 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
                         let handPoint = CGPoint(x: point.x, y: point.y)
                         if expandedFace.contains(handPoint) {
                             self.triggerHandFaceNotification()
+                            
                             return
                         }
                     }
@@ -124,33 +125,39 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 
     func handleFace(observation: VNFaceObservation) {
-
+        // Figures out if the user is looking down
         guard let pitch = observation.pitch else { return }
-
         let pitchValue = pitch.doubleValue
 
         if pitchValue < -0.15 {
             triggerHeadDownNotification(direction: "up")
         } else if pitchValue > 0.4 {
             triggerHeadDownNotification(direction: "down")
+            
+           
         }
     }
 
     /// Called when a hand fingertip overlaps the face bounding box.
     func triggerHandFaceNotification() {
+        // This will be triggered when the user toiches their face
         let now = Date()
-        // Cooldown: alert at most once every 0.7 seconds
-        lastHandFaceNotificationTime = now
-        print("Hand touching face detected!")
-        playWav(named: "dont_touch_your_face")
+        if  UserDefaults.standard.bool(forKey: touchFaceKey){
+            lastHandFaceNotificationTime = now
+            print("Hand touching face detected!")
+            playWav(named: "dont_touch_your_face")
+        }
     }
 
     func triggerHeadDownNotification(direction: String) {
         if direction == "down" {
-            if Int.random(in: 1...2) == 1 {
-                playWav(named: "mmmrmmm")
-            } else {
-                playWav(named: "dont_fall_asleep")
+            print("Falling asleep detected!")
+            if  UserDefaults.standard.bool(forKey: fallAsleepKey){
+                if Int.random(in: 1...2) == 1 {
+                    playWav(named: "mmmrmmm")
+                } else {
+                    playWav(named: "dont_fall_asleep")
+                }
             }
         }
         
