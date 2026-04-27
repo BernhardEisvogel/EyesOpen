@@ -1,5 +1,9 @@
-This is a macOSX background app that keeps you from touching your face, biting your nails (moving your hands cose to your face) while working.
-It also keeps you from falling asleep. This is important to get rid of bad habits.  
+# Introduction
+This is a macOS background app that keeps you from touching your face, biting your nails/popping pimples (essentially moving your hands close to your face) while working. It also keeps you from falling asleep. 
 
+The goal is to help you get rid of bad habits. The logic is currently done with an Apple framework for audio detection, so it does not nedd internet, and your video data will not be shared with any external providers.
 
-This is a project for the Big Berlin 2026 Hack.
+Feel free to collaborate! The first version has been hacked in two hours during a Hackathon so please excuse suboptimal solutions. Have fun with it!
+
+# Future Developments
+We are currently working on a version that detects when you dont sit upright, which would greatly reduce our backpain.
