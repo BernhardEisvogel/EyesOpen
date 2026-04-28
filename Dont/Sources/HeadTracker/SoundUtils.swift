@@ -10,10 +10,10 @@ func stopWav() {
 
 var timeNextSoundNotification = Date.distantPast // I dont want stuff to be said at the same time
 
-func playWav(named fileName: String) {
+func playWav(named fileName: String, ext: String = "m4a") {
     let now = Date()
     if (now>timeNextSoundNotification){
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "m4a") else {
+        guard let url = Bundle.module.url(forResource: fileName, withExtension: ext) else {
             print("Sound not found: \(fileName)")
             return
         }

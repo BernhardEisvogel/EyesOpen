@@ -145,7 +145,7 @@ class HeadTracker: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         if  UserDefaults.standard.bool(forKey: touchFaceKey){
             lastHandFaceNotificationTime = now
             print("Hand touching face detected!")
-            playWav(named: "dont_touch_your_face")
+            playWav(named: "applepay", ext: "mp3")
         }
     }
 
